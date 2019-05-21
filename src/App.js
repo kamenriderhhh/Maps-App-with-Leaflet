@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import pin from './pinpoint.png'; 
 import './App.css';
+import classnames from 'classnames';
 
 var myIcon = L.icon({
   iconUrl: pin,
@@ -19,6 +21,18 @@ class App extends Component {
     },
     haveUsersLocation: false,
     zoom: 1,
+    // for tab //
+    activeTab: '1',
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~//
+  }
+
+  // For tab //
+  toggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
   }
   
   // Get user geolocation and reconfigurate some attributes
@@ -54,47 +68,78 @@ class App extends Component {
   render(){
     const position = [this.state.location.lat, this.state.location.lng];
     return (
-      <Map className="map" center={position} zoom={this.state.zoom}>
-        <TileLayer
-          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-
-        { 
-          this.state.haveUsersLocation ?
-          <Marker 
-            position={position} 
-            icon={myIcon} >
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker> : ''
-        } 
-      </Map>
+      <div>
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '1' })}
+              onClick={() => { this.toggle('1'); }}
+            >
+              Open Street Map
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '2' })}
+              onClick={() => { this.toggle('2'); }}
+            >
+              Pi Camera
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '3' })}
+              onClick={() => { this.toggle('3'); }}
+            >
+              Sensors Data
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
+            <Row >
+              <Col>
+                <Map className="map" center={position} zoom={this.state.zoom}>
+                  <TileLayer
+                    attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  { 
+                    this.state.haveUsersLocation ?
+                    <Marker 
+                      position={position} 
+                      icon={myIcon} >
+                      <Popup>
+                        A pretty CSS3 popup. <br /> Easily customizable.
+                      </Popup>
+                    </Marker> : ''
+                  } 
+                </Map>
+              </Col>
+            </Row>
+          </TabPane>
+          <TabPane tabId="2">
+            <Row>
+              <Col sm="6">
+                <Card body>
+                  <CardTitle>Pi Camera</CardTitle>
+                  <CardText>Pi Camera showing here</CardText>
+                  <Button>Display view</Button>
+                </Card>
+              </Col>
+            </Row>
+          </TabPane>
+          <TabPane tabId="3">
+            <Row >
+              <Col>
+                  sensors data~~
+              </Col>
+            </Row>
+          </TabPane>
+        </TabContent>
+      </div>
     );
   }
 }
-/*
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-*/
 
 export default App;
