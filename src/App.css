@@ -34,19 +34,24 @@
 }
 */
 
-/*
-body {
-  margin: 0px;
-  width: 100vw;
-  height: 100vh;
+html,body {
+  margin: 0;
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  overflow:visible; /* or overflow:hidden; if dont want scrollbars */
 }
 
 #root {
   height: 100%
 }
-*/
+
 .map {
-  margin:0;
-  width: 100vw;
-  height: 40vw;
+  height: 100vmax;
+}
+
+.location-form {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
