@@ -71,8 +71,8 @@ class MapView extends Component {
             });
         
         
-    };
-    */
+    };*/
+    
     // Get user geolocation and reconfigurate some attributes
     updateLocation = () => {
         getDestination()
@@ -153,7 +153,7 @@ class MapView extends Component {
 
     render() {
         this.updateLocation();
-        
+
         var pos = [this.state.location.lat, this.state.location.lng];
         var dest = [this.state.location.lat, this.state.location.lng];
         if (Object.keys(this.state.curLocations).length != 0){
@@ -167,9 +167,9 @@ class MapView extends Component {
             //console.log("thit: "+this.state.curLocations);
             dest[0] = parseFloat(this.state.destinations.latitude);
             dest[1] = parseFloat(this.state.destinations.longitude);
-            console.log(" ~ "+parseFloat(this.state.destinations.latitude));
+            //console.log(" ~ "+parseFloat(this.state.destinations.latitude));
         }
-        console.log("ye "+dest[0]);
+        //console.log("ye "+dest[0]);
         //console.log(Object.values(pos));
         return (
             <div>
